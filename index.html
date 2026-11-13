@@ -1468,7 +1468,7 @@ const downloadsReady = inViewer ? window.claude.use('downloads').catch(() => nul
 // Phones and tablets (iPhone/iPad Safari ignores download links for generated files): show the
 // finished file with a button; tapping it opens the share sheet (Save Image / Save to Files / LINE).
 // The tap has to be fresh, which is why the file is not shared straight after it is made.
-// Only the file is shared (no title/text), so apps like LINE do not send an extra message with it.
+// Pictures are shared as the file alone, so LINE does not post an extra message with them.
 // Shared files get a short English name (A-Z, 0-9, - only): LINE on iPhone can refuse a shared
 // file whose name has Thai letters, spaces, commas or brackets.
 function shareName(filename){
@@ -1514,7 +1514,10 @@ function offerShare(filename, blob){
     if(act === 'open'){ window.open(url, '_blank'); return; }
     if(act !== 'share') return;
     if(canShare){
-      try{ await navigator.share({ files: [file] }); close(); }
+      // LINE on iPhone only takes a shared PDF/HTML when a title comes with it (it then also posts the
+      // title as a message); a picture goes through without one, so only images are shared bare.
+      const data = blob.type.startsWith('image/') ? { files: [file] } : { files: [file], title: filename };
+      try{ await navigator.share(data); close(); }
       catch(err){ if(err && err.name === 'AbortError') return; window.open(url, '_blank'); }
     }else{
       window.open(url, '_blank');
