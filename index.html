@@ -1469,12 +1469,16 @@ const downloadsReady = inViewer ? window.claude.use('downloads').catch(() => nul
 // finished file with a button; tapping it opens the share sheet (Save Image / Save to Files / LINE).
 // The tap has to be fresh, which is why the file is not shared straight after it is made.
 // Only the file is shared (no title/text), so apps like LINE do not send an extra message with it.
-// Shared files get a plain name (letters, digits, - and _ only): some chat apps, LINE among them,
-// can refuse a file whose name has spaces, commas or brackets.
+// Shared files get a short English name (A-Z, 0-9, - only): LINE on iPhone can refuse a shared
+// file whose name has Thai letters, spaces, commas or brackets.
 function shareName(filename){
-  const dot = filename.lastIndexOf('.'), ext = filename.slice(dot);
-  const base = filename.slice(0, dot).replace(/[^\p{L}\p{M}\p{N}_-]+/gu, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
-  return (base || 'leasing') + ext;
+  const ext = filename.slice(filename.lastIndexOf('.'));
+  const ascii = s => String(s || '').normalize('NFKD').replace(/[^A-Za-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  let base;
+  if(ext === '.html') base = 'Leasing-Calculator';
+  else if(TAB === 'rebate') base = ['Interest-Rebate', ascii(R.product)].filter(Boolean).join('_');
+  else base = ['Leasing', ascii(S.lessorEn).split('-').slice(0, 2).join('-')].filter(Boolean).join('_');
+  return base + ext;
 }
 function offerShare(filename, blob){
   filename = shareName(filename);
@@ -1557,7 +1561,7 @@ document.getElementById('jpg').addEventListener('click', e => busy(e.currentTarg
 // whose page size and margins differ between Chrome, Safari, iPhone and iPad.
 document.getElementById('pdf').addEventListener('click', e => busy(e.currentTarget, 'กำลังสร้าง PDF…', async () => {
   if(!window.jspdf) await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
-  const canvas = await makeCanvas(isIOS ? 2.5 : 3);
+  const canvas = await makeCanvas(isIOS ? 2 : 3);   // smaller file on iPhone/iPad, easier for chat apps
   const land = TAB === 'lease';
   const pdf = new window.jspdf.jsPDF({ orientation: land ? 'landscape' : 'portrait', unit: 'mm', format: 'a4', compress: true });
   pdf.addImage(canvas.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, land ? 297 : 210, land ? 210 : 297);
