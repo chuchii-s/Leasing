@@ -139,6 +139,8 @@ table.sum small{font-weight:400;font-size:10.5px;color:var(--faint)}
 .sharebtns{display:flex;gap:10px}
 .sharebtns .btn{flex:1;height:46px;border-radius:12px;font-weight:600}
 .sharebtns .btn.primary{width:auto}
+.sharebtns{flex-wrap:wrap}
+.sharebtns .btn{min-width:90px}
 .sharehint{margin:0;font-size:12.5px;color:var(--muted);line-height:1.5}
 .nojs{margin:16px max(16px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left));padding:12px 16px;border-radius:12px;background:#fff4e6;border:1px solid #fbe3c4;color:#8a4b00;font-size:14px;line-height:1.6}
 .grid2.one{grid-template-columns:1fr}
@@ -1467,7 +1469,16 @@ const downloadsReady = inViewer ? window.claude.use('downloads').catch(() => nul
 // finished file with a button; tapping it opens the share sheet (Save Image / Save to Files / LINE).
 // The tap has to be fresh, which is why the file is not shared straight after it is made.
 // Only the file is shared (no title/text), so apps like LINE do not send an extra message with it.
+// Shared files get a plain name (letters, digits, - and _ only): some chat apps, LINE among them,
+// can refuse a file whose name has spaces, commas or brackets.
+function shareName(filename){
+  const dot = filename.lastIndexOf('.'), ext = filename.slice(dot);
+  const base = filename.slice(0, dot).replace(/[^\p{L}\p{M}\p{N}_-]+/gu, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+  return (base || 'leasing') + ext;
+}
 function offerShare(filename, blob){
+  filename = shareName(filename);
+  const isPdf = blob.type === 'application/pdf';
   const file = new File([blob], filename, { type: blob.type });
   const url = URL.createObjectURL(blob);
   const box = document.createElement('div');
@@ -1477,6 +1488,7 @@ function offerShare(filename, blob){
       <p class="sharename"></p>
       <div class="sharebtns">
         <button class="btn primary" type="button" data-act="share">บันทึก / แชร์</button>
+        <button class="btn" type="button" data-act="open" hidden>เปิดไฟล์</button>
         <button class="btn" type="button" data-act="close">ปิด</button>
       </div>
       <p class="sharehint"></p>
@@ -1486,13 +1498,16 @@ function offerShare(filename, blob){
   else prev.textContent = 'PDF';
   box.querySelector('.sharename').textContent = filename;
   const canShare = !!(navigator.canShare && navigator.canShare({ files: [file] }));
+  // PDF: also offer to open it in the browser, whose own share button can pass it to LINE
+  box.querySelector('[data-act="open"]').hidden = !isPdf;
   box.querySelector('.sharehint').textContent = canShare
-    ? (blob.type.startsWith('image/') ? 'เลือก "บันทึกรูปภาพ" เพื่อเก็บลงคลังรูป หรือ "บันทึกไปยังไฟล์"' : 'เลือก "บันทึกไปยังไฟล์" หรือส่งต่อทาง LINE / อีเมล')
+    ? (blob.type.startsWith('image/') ? 'เลือก "บันทึกรูปภาพ" เพื่อเก็บลงคลังรูป หรือ "บันทึกไปยังไฟล์"' : 'เลือก LINE หรือ "บันทึกไปยังไฟล์" ถ้าไม่เห็น LINE หรือส่งไม่ได้ ให้กด "เปิดไฟล์" แล้วใช้ปุ่มแชร์ของเบราว์เซอร์ หรือบันทึกไปยังไฟล์แล้วแนบใน LINE (+ → ไฟล์)')
     : (blob.type.startsWith('image/') ? 'กดค้างที่รูปเพื่อบันทึกรูปภาพ' : 'กดปุ่มเพื่อเปิดไฟล์ แล้วใช้ปุ่มแชร์ของเบราว์เซอร์');
   const close = () => { box.remove(); setTimeout(() => URL.revokeObjectURL(url), 60000); };
   box.addEventListener('click', async e => {
     const act = e.target.dataset && e.target.dataset.act;
     if(e.target === box || act === 'close') return close();
+    if(act === 'open'){ window.open(url, '_blank'); return; }
     if(act !== 'share') return;
     if(canShare){
       try{ await navigator.share({ files: [file] }); close(); }
