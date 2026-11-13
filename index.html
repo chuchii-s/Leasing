@@ -27,7 +27,7 @@ body{margin:0;font-family:'Noto Sans Thai','Leelawadee UI',Tahoma,sans-serif;col
 .editor .hint{color:var(--muted);font-size:12px;line-height:1.55;margin:0 0 12px}
 .editor label{display:block;font-weight:500;font-size:12.5px;color:#3a4a5e;margin:12px 0 5px}
 .editor input,.editor select,.editor textarea{width:100%;font:inherit;font-size:14px;padding:8px 10px;border:1px solid #d5dde7;border-radius:10px;background:#fbfcfd;color:var(--ink);transition:border-color .15s,box-shadow .15s}
-.editor input:focus,.editor select:focus,.editor textarea:focus{outline:none;border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(11,116,196,.15)}
+.editor input:focus,.editor select:focus,.editor textarea:focus{outline:none;border-color:var(--blue);background-color:#fff;box-shadow:0 0 0 3px rgba(11,116,196,.15)}
 .editor textarea{min-height:64px;resize:vertical}
 .editor .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .editor fieldset{border:1px solid var(--line);border-radius:12px;padding:8px 12px 12px;margin:16px 0 0;background:#fafbfd}
@@ -87,6 +87,7 @@ body{margin:0;font-family:'Noto Sans Thai','Leelawadee UI',Tahoma,sans-serif;col
 .sec{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;margin:2px 0 10px}
 .sec::before{content:"";width:4px;height:16px;border-radius:2px;background:var(--blue)}
 .sec2{margin-top:18px}
+.sec .estnote{font-size:12px;font-weight:400;color:var(--orange)}
 
 /* plan cards */
 .cards{display:grid;gap:12px}
@@ -146,6 +147,52 @@ table.sum small{font-weight:400;font-size:10.5px;color:var(--faint)}
 .chkrow{display:flex;gap:24px;margin-top:14px}
 .chkrow label.chk{margin:0}
 .editor label.chk input{width:auto;margin:0;accent-color:var(--blue)}
+
+/* ---------- form fields ---------- */
+.editor h2{font-size:18px;font-weight:700}
+.editor label{font-size:12px;font-weight:600;color:#5b6b80;letter-spacing:.1px;margin:14px 0 6px}
+.editor input,.editor select,.editor textarea{height:44px;padding:0 14px;border:1.5px solid transparent;border-radius:12px;background-color:#f1f5fa;font-size:14.5px;color:var(--ink);transition:background .15s,border-color .15s,box-shadow .15s}
+.editor textarea{height:auto;min-height:64px;padding:10px 14px;line-height:1.5}
+.editor input:hover,.editor select:hover,.editor textarea:hover{background-color:#e9eff7}
+.editor input:focus,.editor select:focus,.editor textarea:focus{outline:none;background-color:#fff;border-color:#1d56b8;box-shadow:0 0 0 4px rgba(29,86,184,.12)}
+.editor input::placeholder,.editor textarea::placeholder{color:#9aa7b6}
+.editor select{appearance:none;-webkit-appearance:none;padding-right:38px;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235b6b80' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:16px}
+.editor input[type=number]{font-variant-numeric:tabular-nums;-moz-appearance:textfield}
+.editor input[type=number]::-webkit-inner-spin-button,.editor input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+/* unit shown inside a field (บาท, %, ปี) */
+.editor label .lbl-note{font-weight:400}
+.unit{position:relative}
+.unit::after{content:attr(data-unit);position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:12.5px;font-weight:500;color:#8a97a6;pointer-events:none}
+.unit input{padding-right:48px}
+.editor .plans .unit input{text-align:center;padding-left:44px;padding-right:44px}   /* rate centered, same gap on both sides of the % */
+/* grouped sections */
+.editor fieldset{border:0;background:#f7f9fc;border-radius:16px;padding:12px 14px 14px;margin:18px 0 0;box-shadow:inset 0 0 0 1px #e6ecf4}
+.editor legend{float:left;width:100%;padding:0;margin:0 0 2px;font-size:13px;font-weight:700;color:#10307a}
+.editor fieldset input,.editor fieldset select{background-color:#fff;border-color:#e1e8f1}
+.editor fieldset input:hover,.editor fieldset select:hover{background-color:#fff;border-color:#c9d6e6}
+.editor fieldset input:focus,.editor fieldset select:focus{border-color:#1d56b8}
+/* plan rows */
+.plans{border-collapse:separate;border-spacing:0 6px;margin-top:0}
+.plans th{font-size:11.5px;font-weight:600;color:#7a8799;padding:4px 4px 0}
+.plans th{white-space:nowrap}
+.plans th:nth-child(2){text-align:center}
+.plans td{padding:0 3px}
+.btn.x{width:36px;height:36px;padding:0;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;color:#c2410c}
+.btn.x:hover{background:#fdeee7}
+#add{height:44px;border-radius:12px;border:1.5px dashed #b9cbe4;background:#fff;color:#10307a;font-weight:600;padding:0 14px}
+#add:hover{background:#f0f5fc;border-color:#8fb0dc}
+/* on/off switches */
+.chkrow{padding:12px 14px;background:#f7f9fc;border-radius:14px;box-shadow:inset 0 0 0 1px #e6ecf4;gap:22px}
+.editor label.chk{font-size:13px;font-weight:500;color:var(--ink);gap:10px;margin:0}
+.editor label.chk input[type=checkbox]{appearance:none;-webkit-appearance:none;position:relative;flex:none;width:38px;height:22px;min-height:0;padding:0;border:0;border-radius:999px;background:#cfd8e3;cursor:pointer;transition:background .2s}
+.editor label.chk input[type=checkbox]::before{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(11,20,38,.25);transition:transform .2s}
+.editor label.chk input[type=checkbox]:checked{background:#1d56b8}
+.editor label.chk input[type=checkbox]:checked::before{transform:translateX(16px)}
+.editor label.chk input[type=checkbox]:focus-visible{outline:none;box-shadow:0 0 0 4px rgba(29,86,184,.2)}
+/* narrow screens: the three export buttons wrap instead of squeezing their labels */
+.actions .sub{flex-wrap:wrap}
+.actions .sub .btn{flex:1 1 120px;white-space:nowrap}
+@media (prefers-reduced-motion: reduce){.editor *{transition:none!important}}
 
 /* ---------- tab menu ---------- */
 .tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:#eef2f7;border-radius:16px;padding:6px;margin-bottom:18px}
@@ -210,7 +257,11 @@ table.calc tr.hi td:last-child,table.calc tr.hi2 td:last-child{border-radius:0 8
 .editor.compact h2{font-size:15.5px;margin-bottom:2px}
 .editor.compact .hint{display:none}
 .editor.compact label{margin:8px 0 3px}
-.editor.compact input,.editor.compact select{padding:6px 10px}
+.editor.compact input,.editor.compact select{padding:0 12px;height:38px}
+.editor.compact select{padding-right:34px}
+.editor.compact .unit input{padding-right:44px}
+.editor.compact #add{height:38px}
+.editor.compact .chkrow{padding:8px 12px}
 .editor.compact textarea{min-height:44px;padding:6px 10px}
 .editor.compact fieldset{margin-top:10px;padding:4px 10px 8px}
 .editor.compact .plans td{padding:2px 4px}
@@ -219,7 +270,10 @@ table.calc tr.hi td:last-child,table.calc tr.hi2 td:last-child{border-radius:0 8
 .editor.compact .actions .btn{height:42px}
 .editor.compact #reset{height:36px}
 .editor.compact2 label{margin:5px 0 2px;font-size:12px}
-.editor.compact2 input,.editor.compact2 select{padding:4px 10px}
+.editor.compact2 input,.editor.compact2 select{padding:0 10px;height:34px}
+.editor.compact2 select{padding-right:32px}
+.editor.compact2 .unit input{padding-right:42px}
+.editor.compact2 #add{height:34px}
 .editor.compact2 .tab{padding:6px 8px}
 .editor.compact2 .tab .ti{width:26px;height:26px}
 .editor.compact2 textarea{min-height:34px}
@@ -228,13 +282,16 @@ table.calc tr.hi td:last-child,table.calc tr.hi2 td:last-child{border-radius:0 8
 .editor.compact2 #reset{height:38px;width:auto;flex:none;padding:0 12px}
 .editor.compact2 #reset .lbl{display:none}
 .editor.compact2 .actions .sub .btn{padding:0 6px}
+.editor.compact2 .actions .sub{flex-wrap:nowrap}
+.editor.compact2 .actions .sub .btn{flex:1 1 0;min-width:0;font-size:13.5px}
 .editor.compact2 > div > h2{display:none}
 .editor.compact2 textarea{height:34px;min-height:34px}
-.editor.compact2 .plans input,.editor.compact2 .plans select{padding:3px 10px}
+.editor.compact2 .plans input,.editor.compact2 .plans select{height:32px}
+.editor.compact2 .plans{border-spacing:0 4px}
 .editor.compact2 .actions{flex-direction:row;align-items:stretch;flex-wrap:wrap}
 .editor.compact2 .actions .sub{flex:1}
 .editor.compact2 .actions .btn{white-space:nowrap;font-size:14px;padding:0 10px}
-.editor.compact2 .actions .btn .ib{display:none}
+.editor.compact2 .actions .btn .ib{width:22px;height:22px;border-radius:7px}
 .editor.compact3{top:12px;max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px)}
 .editor.compact3 label{margin:3px 0 1px}
 .editor.compact3 label[for="f-notes"],.editor.compact3 label[for="r-f-notes"]{display:none}
@@ -291,19 +348,19 @@ table.calc tr.hi td:last-child,table.calc tr.hi2 td:last-child{border-radius:0 8
     <input id="r-f-product" data-r="product">
     <div class="row2">
       <div><label for="r-f-name1">ชื่อแบบที่ 1</label><input id="r-f-name1" data-r="name1"></div>
-      <div><label for="r-f-price1">ราคาขาย (บาท)</label><input id="r-f-price1" data-r="price1" type="number" min="0" step="any"></div>
+      <div><label for="r-f-price1">ราคาขาย</label><div class="unit" data-unit="บาท"><input id="r-f-price1" data-r="price1" type="number" min="0" step="any" inputmode="decimal"></div></div>
     </div>
     <div class="row2">
       <div><label for="r-f-name2">ชื่อแบบที่ 2 <span style="font-weight:400;color:var(--muted)">(ว่าง = แบบเดียว)</span></label><input id="r-f-name2" data-r="name2"></div>
-      <div><label for="r-f-price2">ราคาขาย (บาท)</label><input id="r-f-price2" data-r="price2" type="number" min="0" step="any"></div>
+      <div><label for="r-f-price2">ราคาขาย</label><div class="unit" data-unit="บาท"><input id="r-f-price2" data-r="price2" type="number" min="0" step="any" inputmode="decimal"></div></div>
     </div>
     <div class="row2">
-      <div><label for="r-f-down">เงินดาวน์ (% ของราคา)</label><input id="r-f-down" data-r="downPct" type="number" min="0" max="100" step="0.5"></div>
-      <div><label for="r-f-pay">ช่วยจ่ายดอกเบี้ย (ปี)</label><input id="r-f-pay" data-r="payYears" type="number" min="0" step="1"></div>
+      <div><label for="r-f-down">เงินดาวน์ (ของราคาขาย)</label><div class="unit" data-unit="%"><input id="r-f-down" data-r="downPct" type="number" min="0" max="100" step="0.5" inputmode="decimal"></div></div>
+      <div><label for="r-f-pay">ช่วยจ่ายดอกเบี้ย</label><div class="unit" data-unit="ปี"><input id="r-f-pay" data-r="payYears" type="number" min="0" step="1" inputmode="numeric"></div></div>
     </div>
     <div class="row2">
       <div><label for="r-term">ระยะเวลาผ่อน</label><select id="r-term"></select></div>
-      <div><label for="r-rate">ดอกเบี้ย % ต่อปี</label><input id="r-rate" type="number" min="0" step="any"></div>
+      <div><label for="r-rate">ดอกเบี้ยต่อปี</label><div class="unit" data-unit="%"><input id="r-rate" type="number" min="0" step="any" inputmode="decimal"></div></div>
     </div>
     <label for="r-f-notes">หมายเหตุใน PDF (บรรทัดละข้อ, ว่าง = ไม่แสดง)</label>
     <textarea id="r-f-notes" data-r="extraNotes" placeholder="เช่น ราคายังไม่รวม VAT 7%"></textarea>
@@ -320,19 +377,19 @@ table.calc tr.hi td:last-child,table.calc tr.hi2 td:last-child{border-radius:0 8
     <label for="f-lessor-pick">สถาบันการเงิน</label>
     <select id="f-lessor-pick"></select>
     <div class="row2">
-      <div><label for="f-priceLabel">ป้ายยอดจัด</label><input id="f-priceLabel" data-k="priceLabel"></div>
-      <div><label for="f-price">ยอดจัดลีสซิ่ง (บาท)</label><input id="f-price" data-k="price" type="number" min="0" step="any"></div>
+      <div><label for="f-priceLabel">ชื่อป้ายยอดจัดมุมขวาบน</label><input id="f-priceLabel" data-k="priceLabel"></div>
+      <div><label for="f-price">ยอดจัดลีสซิ่ง</label><div class="unit" data-unit="บาท"><input id="f-price" data-k="price" type="number" min="0" step="any" inputmode="decimal"></div></div>
     </div>
 
     <fieldset>
       <legend>แผนการผ่อน</legend>
       <table class="plans">
-        <thead><tr><th>จำนวนงวด (เดือน)</th><th>ดอกเบี้ย % ต่อปี</th><th></th></tr></thead>
+        <thead><tr><th>จำนวนงวด (เดือน)</th><th>ดอกเบี้ยต่อปี</th><th></th></tr></thead>
         <tbody id="plans"></tbody>
       </table>
       <div class="planfoot">
         <button class="btn" id="add" type="button">+ เพิ่มแผน</button>
-        <div class="pop"><label for="f-popular">ป้าย "แผนยอดนิยม"</label><select id="f-popular"></select></div>
+        <div class="pop"><label for="f-popular">ป้าย "แผนยอดนิยม" <span class="lbl-note">วางไว้ตำแหน่งใด</span></label><select id="f-popular"></select></div>
       </div>
     </fieldset>
     <div class="chkrow">
@@ -346,9 +403,9 @@ table.calc tr.hi td:last-child,table.calc tr.hi2 td:last-child{border-radius:0 8
 
     <div class="actions">
       <div class="sub">
-        <button class="btn primary ico" id="pdf" type="button"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></span>Export PDF</button>
-        <button class="btn primary ico" id="jpg" type="button"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-9 9"/></svg></span>Export JPG</button>
-        <button class="btn primary ico" id="savehtml" type="button" title="บันทึกไฟล์ HTML ที่ใช้ข้อมูลตอนนี้เป็นค่าตั้งต้น ส่งให้เครื่องอื่นเปิดได้"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 9l-4 3 4 3M16 9l4 3-4 3M13.5 6l-3 12"/></svg></span>Export HTML</button>
+        <button class="btn primary ico" id="pdf" type="button" title="บันทึกเป็น PDF ขนาด A4" aria-label="Export PDF"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></span>PDF</button>
+        <button class="btn primary ico" id="jpg" type="button" title="บันทึกเป็นรูป JPG" aria-label="Export JPG"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-9 9"/></svg></span>JPG</button>
+        <button class="btn primary ico" id="savehtml" type="button" title="บันทึกไฟล์ HTML ที่ใช้ข้อมูลตอนนี้เป็นค่าตั้งต้น ส่งให้เครื่องอื่นเปิดได้" aria-label="Export HTML"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></span>HTML</button>
       </div>
       <button class="btn ico" id="reset" type="button"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg><span class="lbl">คืนค่าตัวอย่าง</span></button>
       <p class="msg" id="exportMsg" role="status" hidden></p>
@@ -1011,7 +1068,7 @@ function render(){
   const ms = rows.map(r => r.m);
   const lo = Math.min(...ms), hi = Math.max(...ms);
   const span = (lo % 12 || hi % 12) ? `${lo} - ${hi} เดือน` : `${lo/12} - ${hi/12} ปี`;
-  $('o-sec1').textContent = `รายละเอียดแผนการผ่อนชำระ (${span})`;
+  $('o-sec1').innerHTML = `รายละเอียดแผนการผ่อนชำระ (${esc(span)}) <span class="estnote">(ยอดผ่อนชำระเป็นตัวเลขประมาณการเท่านั้น)</span>`;
 
   const iLowInt = rows.reduce((a, r, i) => r.interest < rows[a].interest ? i : a, 0);
   const iLowMo  = rows.reduce((a, r, i) => r.mo < rows[a].mo ? i : a, 0);
@@ -1076,7 +1133,7 @@ function renderPlans(){
   const tb = document.getElementById('plans');
   tb.innerHTML = S.plans.map((p, i) => `<tr>
     <td><select data-i="${i}" data-f="m" aria-label="จำนวนงวดแผน ${i+1}">${termOptions(p.m)}</select></td>
-    <td><input type="number" min="0" step="any" value="${Number(+p.r || 0).toFixed(2)}" data-i="${i}" data-f="r" aria-label="ดอกเบี้ยแผน ${i+1}"></td>
+    <td><div class="unit" data-unit="%"><input type="number" min="0" step="any" inputmode="decimal" value="${Number(+p.r || 0).toFixed(2)}" data-i="${i}" data-f="r" aria-label="ดอกเบี้ยแผน ${i+1}"></div></td>
     <td><button class="btn x" type="button" data-del="${i}" title="ลบแผน">✕</button></td></tr>`).join('');
   const sel = document.getElementById('f-popular');
   sel.innerHTML = '<option value="-1">ไม่แสดง</option>' +
@@ -1409,6 +1466,7 @@ const downloadsReady = inViewer ? window.claude.use('downloads').catch(() => nul
 // Phones and tablets (iPhone/iPad Safari ignores download links for generated files): show the
 // finished file with a button; tapping it opens the share sheet (Save Image / Save to Files / LINE).
 // The tap has to be fresh, which is why the file is not shared straight after it is made.
+// Only the file is shared (no title/text), so apps like LINE do not send an extra message with it.
 function offerShare(filename, blob){
   const file = new File([blob], filename, { type: blob.type });
   const url = URL.createObjectURL(blob);
@@ -1437,7 +1495,7 @@ function offerShare(filename, blob){
     if(e.target === box || act === 'close') return close();
     if(act !== 'share') return;
     if(canShare){
-      try{ await navigator.share({ files: [file], title: filename }); close(); }
+      try{ await navigator.share({ files: [file] }); close(); }
       catch(err){ if(err && err.name === 'AbortError') return; window.open(url, '_blank'); }
     }else{
       window.open(url, '_blank');
