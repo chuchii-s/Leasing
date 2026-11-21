@@ -91,6 +91,44 @@ body{margin:0;font-family:'Noto Sans Thai','Leelawadee UI',Tahoma,sans-serif;col
 .sec{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;margin:2px 0 10px}
 .sec::before{content:"";width:4px;height:16px;border-radius:2px;background:var(--blue)}
 .sec2{margin-top:18px}
+/* installment schedule (ผ่อนชำระ) */
+.paygrid{display:grid;grid-template-columns:1fr;gap:12px}
+.paygrid.two{grid-template-columns:1fr 1fr}
+.paygrid .panel{padding:4px 14px 8px}
+table.paytbl{width:100%;border-collapse:collapse;font-size:12px}
+table.paytbl th{text-align:right;padding:7px 6px;font-weight:500;font-size:11px;color:var(--muted);border-bottom:1px solid var(--line)}
+table.paytbl th:first-child,table.paytbl td:first-child{text-align:center;width:44px}
+table.paytbl th:nth-child(2),table.paytbl td:nth-child(2){text-align:left}
+table.paytbl td{padding:4px 6px;border-bottom:1px solid #f0f3f7;text-align:right;white-space:nowrap}
+table.paytbl tr:last-child td{border-bottom:0}
+/* header row on a light blue band */
+table.paytbl thead th,table.itemtbl thead th{background:#eaf3fc;color:#3b5a85;font-weight:600;border-bottom:0}
+table.paytbl thead th:first-child,table.itemtbl thead th:first-child{border-radius:8px 0 0 8px}
+table.paytbl thead th:last-child,table.itemtbl thead th:last-child{border-radius:0 8px 8px 0}
+.paygrid .panel,.itempanel{padding-top:10px}
+table.paytbl td.amt{color:#10307a;font-weight:600}
+table.paytbl td.cum{color:var(--muted)}
+.paygrid.two table.paytbl{font-size:11px}
+.paygrid.two table.paytbl td{padding:3px 5px}
+/* long schedules (more than 20 rows per column) get tighter rows so 60 installments fit one A4 page */
+.paygrid.dense table.paytbl{font-size:10.5px;line-height:1.35}
+.paygrid.dense table.paytbl td{padding:2px 5px}
+.paygrid.dense table.paytbl th{padding:5px 5px}
+.kvbox.full{grid-column:1 / -1}
+/* ผ่อนชำระ report: smaller info boxes */
+#p-info{gap:8px;grid-template-columns:repeat(4,1fr)}   /* period, first, last, amount on one row */
+#p-info .kvbox{padding:6px 12px;border-radius:10px}
+#p-info .kvbox .l{font-size:10px}
+#p-info .kvbox .v{font-size:14px;line-height:1.35}
+#p-info .kvbox .v small,#p-info .kvbox .warn{font-size:10px!important}
+#p-info .kvbox.withicon{display:flex;align-items:center;gap:10px}
+#p-info .kvbox .kvicon{flex:none;width:32px;height:32px;border-radius:10px;background:#0f6b37;color:#fff;display:flex;align-items:center;justify-content:center}
+#p-info .kvbox.total{background:#eef8f1;border-color:#cfe9d8}
+#p-info .kvbox.total .v{color:#0f6b37}
+#p-info .kvbox.total .l{color:#3f6b50}
+#p-info .kvbox.amt .v{color:var(--orange)}
+.kvbox .v.big{font-size:20px}
+.kvbox.total{background:#f2f8fe;border-color:#d4e6f7}
 .sec .estnote{font-size:12px;font-weight:400;color:var(--orange)}
 
 /* plan cards */
@@ -167,6 +205,42 @@ table.sum small{font-weight:400;font-size:10.5px;color:var(--faint)}
 .editor input[type=number]::-webkit-inner-spin-button,.editor input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 /* unit shown inside a field (บาท, %, ปี) */
 .editor label .lbl-note{font-weight:400}
+/* machine list (ผ่อนชำระ) */
+#p-itemlist{clear:both;display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.item{display:grid;grid-template-columns:minmax(0,1fr) 36px;gap:6px 6px;align-items:center;padding-bottom:10px;border-bottom:1px dashed #dfe6ef}
+.item:last-child{border-bottom:0;padding-bottom:0}
+.item .itemrow2{grid-column:1 / -1;display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr) minmax(0,1fr);gap:6px;align-items:center}
+.editor .item input,.editor .item select{height:40px}
+.editor .item .unit input{padding-right:58px}
+.item .linetot{text-align:right;font-size:13px;font-weight:700;color:#10307a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item .linetot small{display:block;font-size:10.5px;font-weight:500;color:#7a8799}
+.itemfoot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:12px;font-size:13px}
+.itemfoot b{color:#10307a}
+#p-additem{flex:none;height:38px;border-radius:12px;border:1.5px dashed #b9cbe4;background:#fff;color:#10307a;font-weight:600;padding:0 14px}
+#p-additem:hover{background:#f0f5fc;border-color:#8fb0dc}
+.editor.compact .item input,.editor.compact .item select{height:36px}
+/* machine list on the report */
+.itempanel{grid-column:1 / -1;padding:2px 14px 6px}
+table.itemtbl{width:100%;border-collapse:collapse;font-size:12px}
+table.itemtbl th{text-align:right;padding:7px 6px;font-weight:500;font-size:11px;color:var(--muted);border-bottom:1px solid var(--line)}
+table.itemtbl td{padding:6px;border-bottom:1px solid #f0f3f7;text-align:right;white-space:nowrap}
+table.itemtbl th:first-child,table.itemtbl td:first-child{text-align:left}
+table.itemtbl td.model{font-weight:600;color:var(--ink)}
+table.itemtbl tfoot td{border-bottom:0;font-weight:700;color:#10307a;font-size:13px;padding-top:8px}
+table.itemtbl tfoot td:last-child{color:#0f6b37}   /* grand total in dark green */
+.instgrid{clear:both;display:grid;grid-template-columns:repeat(3,1fr);gap:4px 8px;margin-top:4px}
+.editor .instgrid label{margin:6px 0 3px;font-size:11px;font-weight:600;color:#7a8799;white-space:nowrap}
+.editor .instgrid input{height:38px;padding:0 10px;text-align:right;font-size:13.5px}
+.editor .instgrid input.auto{color:#66768a}
+.editor .instgrid input.edited{color:#10307a;font-weight:700;border-color:#b9d2f5}
+.instfoot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px;font-size:12.5px;line-height:1.4}
+.instfoot .ok{color:var(--green);font-weight:600}
+.instfoot .bad{color:#c2410c;font-weight:600}
+#p-instreset{flex:none;height:34px;padding:0 12px;font-size:13px;border-radius:10px}
+@media screen and (max-width:420px){.instgrid{grid-template-columns:repeat(2,1fr)}}
+.kvbox .warn{display:block;font-size:11px;font-weight:600;color:#c2410c}
+.editor input[readonly]{background-color:#e9f1fd;color:#10307a;font-weight:700;cursor:default}
+.editor input[readonly]:hover,.editor input[readonly]:focus{background-color:#e9f1fd;border-color:transparent;box-shadow:none}
 .unit{position:relative}
 .unit::after{content:attr(data-unit);position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:12.5px;font-weight:500;color:#8a97a6;pointer-events:none}
 .unit input{padding-right:48px}
@@ -201,7 +275,7 @@ table.sum small{font-weight:400;font-size:10.5px;color:var(--faint)}
 @media (prefers-reduced-motion: reduce){.editor *{transition:none!important}}
 
 /* ---------- tab menu ---------- */
-.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:#eef2f7;border-radius:16px;padding:6px;margin-bottom:18px}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:#eef2f7;border-radius:16px;padding:6px;margin-bottom:18px}
 .tab{display:flex;align-items:center;gap:6px;min-width:0;text-align:left;font:inherit;border:0;background:transparent;border-radius:12px;padding:9px 8px;cursor:pointer;color:var(--muted);
   transition:background .18s ease,color .18s ease,box-shadow .18s ease,transform .18s ease}
 .tab .ti{flex:none;display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:10px;background:#fff;color:#10307a;box-shadow:0 1px 2px rgba(11,20,38,.08);transition:background .18s ease,color .18s ease}
@@ -220,6 +294,8 @@ table.sum small{font-weight:400;font-size:10.5px;color:var(--faint)}
 .sheet.portrait .pricebox{min-width:0;padding:6px 14px;border-radius:12px}
 .sheet.portrait .pricebox .lb{font-size:10.5px}
 .sheet.portrait .pricebox .v{font-size:18px}
+.pricebox .tot{margin-top:3px;padding-top:4px;border-top:1px solid rgba(255,255,255,.15);font-size:10.5px;color:#c9d8ea;white-space:nowrap}
+.pricebox .tot b{color:#fff;font-weight:700}
 .sheet.portrait .bd{padding:18px 30px 20px}
 .kvgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .kvbox{background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px 14px}
@@ -344,6 +420,33 @@ table.calc tr.hi td:last-child,table.calc tr.hi2 td:last-child{border-radius:0 8
     <div class="tabs" role="tablist">
       <button class="tab" type="button" role="tab" data-tab="lease"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span><span class="tt"><span>เปรียบเทียบ</span><wbr><span>ค่างวดลีสซิ่ง</span></span></button>
       <button class="tab" type="button" role="tab" data-tab="rebate"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.5-1-1.6-1.5-3-1.5-1.7 0-3 .8-3 2s1.3 1.7 3 2 3 .8 3 2-1.3 2-3 2c-1.4 0-2.5-.5-3-1.5M12 6.5V8M12 16v1.5"/></svg></span><span class="tt"><span>คำนวณเงินคืน</span><wbr><span>ค่าดอกเบี้ย</span></span></button>
+      <button class="tab" type="button" role="tab" data-tab="pay"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18M8 3v4M16 3v4M7.5 14h3M7.5 17.5h3M13.5 14h3"/></svg></span><span class="tt"><span>ผ่อนชำระ</span></span></button>
+    </div>
+
+    <div id="ed-pay" hidden>
+    <h2>กรอกข้อมูล · ผ่อนชำระ</h2>
+    <div class="row2">
+      <div><label for="p-f-title">หัวเรื่อง</label><input id="p-f-title" data-p="title"></div>
+      <div><label for="p-f-customer">ชื่อลูกค้า</label><input id="p-f-customer" data-p="customer" placeholder="เช่น โรงพยาบาล / คลินิก"></div>
+    </div>
+    <fieldset id="p-items">
+      <legend>รายการเครื่อง</legend>
+      <div id="p-itemlist"></div>
+      <div class="itemfoot"><button class="btn" id="p-additem" type="button">+ เพิ่มรุ่นเครื่อง</button><span id="p-itemsum"></span></div>
+    </fieldset>
+    <label for="p-f-months">ระยะเวลาการผ่อน</label>
+    <select id="p-f-months" data-p="months"></select>
+    <div class="row2">
+      <div><label for="p-f-month">เดือนที่เริ่มชำระ</label><select id="p-f-month" data-p="startMonth"></select></div>
+      <div><label for="p-f-year">ปี (พ.ศ.)</label><select id="p-f-year" data-p="startYear"></select></div>
+    </div>
+    <fieldset id="p-inst">
+      <legend>ยอดชำระแต่ละงวด <span class="lbl-note" style="font-weight:400;color:#66768a">(แก้ได้ งวดที่ไม่ได้แก้จะแบ่งยอดที่เหลือให้เอง)</span></legend>
+      <div class="instgrid" id="p-instgrid"></div>
+      <div class="instfoot"><span id="p-instsum"></span><button class="btn" id="p-instreset" type="button">แบ่งเท่ากันใหม่</button></div>
+    </fieldset>
+    <label for="p-f-notes">หมายเหตุใน PDF (บรรทัดละข้อ, ว่าง = ไม่แสดง)</label>
+    <textarea id="p-f-notes" data-p="notes" placeholder="เช่น ชำระภายในวันที่ 5 ของทุกเดือน"></textarea>
     </div>
 
     <div id="ed-rebate" hidden>
@@ -351,7 +454,7 @@ table.calc tr.hi td:last-child,table.calc tr.hi2 td:last-child{border-radius:0 8
     <label for="r-f-title">หัวเรื่อง</label>
     <input id="r-f-title" data-r="title">
     <label for="r-f-product">ชื่อสินค้า / รุ่นเครื่อง</label>
-    <input id="r-f-product" data-r="product">
+    <select id="r-f-product" data-r="product"></select>
     <div class="row2">
       <div><label for="r-f-name1">ชื่อแบบที่ 1</label><input id="r-f-name1" data-r="name1"></div>
       <div><label for="r-f-price1">ราคาขาย</label><div class="unit" data-unit="บาท"><input id="r-f-price1" data-r="price1" type="number" min="0" step="any" inputmode="decimal"></div></div>
@@ -479,6 +582,30 @@ table.calc tr.hi td:last-child,table.calc tr.hi2 td:last-child{border-radius:0 8
         <div class="hl flat" id="r-hlbox" hidden>
           <div class="ht">หมายเหตุ:</div>
           <ul id="r-hl"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet portrait" id="sheet-pay" hidden>
+      <header class="hd">
+        <div class="hd-l"><div>
+          <h1 id="p-title"></h1>
+          <div class="sub" id="p-sub"></div>
+        </div></div>
+        <div class="pricebox">
+          <div class="lb">ยอดชำระต่องวด</div>
+          <div class="v" id="p-amt"></div>
+          <div class="tot" id="p-total"></div>
+        </div>
+      </header>
+      <div class="bd">
+        <div class="sec">ข้อมูลการผ่อนชำระ</div>
+        <div class="kvgrid" id="p-info"></div>
+        <div class="sec sec2" id="p-sec2">ตารางกำหนดชำระ</div>
+        <div class="paygrid" id="p-tables"></div>
+        <div class="hl flat" id="p-hlbox" hidden>
+          <div class="ht">หมายเหตุ:</div>
+          <ul id="p-hl"></ul>
         </div>
       </div>
     </div>
@@ -909,23 +1036,39 @@ const DEFAULT = {
   plans: [{m:12,r:2.85},{m:24,r:3.25},{m:36,r:3.50},{m:48,r:3.60},{m:60,r:3.55}],
   extraNotes: ''
 };
+// ผ่อนชำระ: default start = next month
+const PAY_MODELS = ['DBB-27/27C', 'DBB-EXA ES typeB', 'DBB-EXA ES typeA', 'DBB-EXA ES ArchLoop', 'DBB-EXA ST', 'DBB-EXA full', 'CCDS'];
+const TH_MONTHS = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+const TH_MONTHS_SHORT = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+const _next = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1);
+const PDEFAULT = {
+  title: 'ตารางผ่อนชำระ',
+  customer: '',
+  items: [{ model: 'DBB-EXA ES typeA', qty: 1, price: '' }],   // price = per machine
+  months: 6,
+  custom: [],              // amount typed for an installment, or null = share of what is left
+  startMonth: _next.getMonth(),          // 0 = มกราคม
+  startYear: _next.getFullYear() + 543,  // พ.ศ.
+  notes: ''
+};
 const RDEFAULT = {
   title: 'ตารางคำนวณเงินคืนค่าดอกเบี้ย (Flat Rate)',
-  product: 'EXA',
+  product: 'DBB-EXA ES typeA',
   name1: 'แบบที่ 1', name2: '',
   price1: 830000, price2: '',
   downPct: 0, payYears: 1, term: 60,
   rates: [{m:12,r:2.85},{m:24,r:3.25},{m:36,r:3.50},{m:48,r:3.60},{m:60,r:3.55}],
   extraNotes: ''
 };
-const KEY = 'leasing-compare-v1', RKEY = 'leasing-rebate-v1', TKEY = 'leasing-tab', SKEY = 'leasing-saved-id';
+const KEY = 'leasing-compare-v1', RKEY = 'leasing-rebate-v1', PKEY = 'leasing-pay-v1', TKEY = 'leasing-tab', SKEY = 'leasing-saved-id';
 if(SAVED){
   Object.assign(DEFAULT, SAVED.S);
   Object.assign(RDEFAULT, SAVED.R);
+  if(SAVED.P) Object.assign(PDEFAULT, SAVED.P);
   // first time this exported file is opened in this browser: start from its data, not from older edits
   try{
     if(localStorage.getItem(SKEY) !== SAVED.id){
-      localStorage.removeItem(KEY); localStorage.removeItem(RKEY);
+      localStorage.removeItem(KEY); localStorage.removeItem(RKEY); localStorage.removeItem(PKEY);
       localStorage.setItem(TKEY, SAVED.tab || 'lease');
       localStorage.setItem(SKEY, SAVED.id);
     }
@@ -934,15 +1077,27 @@ if(SAVED){
 let S = load(KEY, DEFAULT);
 S.rounding = 'floor10';   // installments always rounded down to the nearest 10 baht
 let R = load(RKEY, RDEFAULT);
-R.rates = structuredClone(RDEFAULT.rates);   // default rates per term are fixed: 2.85 / 3.25 / 3.50 / 3.60 / 3.55
+let P = load(PKEY, PDEFAULT);
+// older data: one model with its total price (or, earlier still, an amount per month)
+if(!Array.isArray(P.items) || !P.items.length){
+  const old = (P.price === '' || P.price == null) && +P.amount ? +P.amount * Math.min(12, +P.months || 1) : P.price;
+  P.items = [{ model: P.model || 'DBB-EXA ES typeA', qty: 1, price: old ?? '' }];
+}
+delete P.amount; delete P.model; delete P.price;
+P.months = Math.min(12, Math.max(1, Math.round(+P.months || 6)));
+if(!Array.isArray(P.custom)) P.custom = [];
+R.rates = clone(RDEFAULT.rates);   // default rates per term are fixed: 2.85 / 3.25 / 3.50 / 3.60 / 3.55
 if('years' in R){ delete R.years; R.rate = null; }   // data saved by the first version had its own single rate
 
+// structuredClone is missing on iOS < 15.4; the state is plain JSON, so a JSON copy is enough
+function clone(o){ return JSON.parse(JSON.stringify(o)); }
 function load(key, def){
-  try{ const t = localStorage.getItem(key); if(t) return Object.assign(structuredClone(def), JSON.parse(t)); }catch(e){}
-  return structuredClone(def);
+  try{ const t = localStorage.getItem(key); if(t) return Object.assign(clone(def), JSON.parse(t)); }catch(e){}
+  return clone(def);
 }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
 function saveR(){ try{ localStorage.setItem(RKEY, JSON.stringify(R)); }catch(e){} }
+function saveP(){ try{ localStorage.setItem(PKEY, JSON.stringify(P)); }catch(e){} }
 
 /* ---------- calculation ---------- */
 function roundMo(x, mode){
@@ -1069,7 +1224,12 @@ function render(){
   $('o-plabel').textContent = S.priceLabel;
   $('o-price').textContent = `${fmtN(+S.price || 0)} บาท`;
 
-  if(!rows.length){ $('o-cards').innerHTML = ''; $('o-rows').innerHTML = ''; $('o-chart').innerHTML = ''; $('o-hl').innerHTML = ''; return; }
+  const grid = document.querySelector('#sheet .grid2');
+  if(!rows.length){
+    $('o-cards').innerHTML = ''; $('o-rows').innerHTML = ''; $('o-chart').innerHTML = ''; $('o-hl').innerHTML = '';
+    $('o-sec1').textContent = 'ยังไม่มีแผนการผ่อนชำระ'; grid.hidden = true; $('o-sec2').hidden = true;
+    return;
+  }
 
   const ms = rows.map(r => r.m);
   const lo = Math.min(...ms), hi = Math.max(...ms);
@@ -1106,7 +1266,6 @@ function render(){
 
   // chart and summary table can each be switched off; the one left takes the full width
   const showSum = S.showSummary !== false, showChart = S.showChart !== false;
-  const grid = document.querySelector('#sheet .grid2');
   grid.classList.toggle('one', !(showSum && showChart));
   grid.hidden = !showSum && !showChart;
   $('o-sumpanel').hidden = !showSum;
@@ -1239,7 +1398,7 @@ function renderRebate(){
   const pay = Math.min(+R.payYears || 0, months / 12);
   $('r-title').textContent = R.title;
   $('r-sub').textContent = `สินค้า ${R.product} · เงินดาวน์ ${fmtN(+R.downPct || 0)}% · ผ่อน ${thShort(months)} (${months} งวด) · Flat Rate ${rate.toFixed(2)}% ต่อปี`;
-  $('r-pay').textContent = `${pay} ปีแรก`;
+  $('r-pay').textContent = pay ? `${pay} ปีแรก` : 'ไม่มี';
 
   // name 2 left blank = single model: no second column, no comparison
   const single = !String(R.name2 || '').trim();
@@ -1295,7 +1454,14 @@ function renderRebate(){
   $('r-hl').innerHTML = notes.map(t => `<li>${esc(t)}</li>`).join('');
   $('r-hlbox').hidden = !notes.length;
 }
-function fillR(){ document.querySelectorAll('[data-r]').forEach(el => { el.value = R[el.dataset.r] ?? ''; }); renderRates(); }
+function fillR(){
+  // model dropdown: the ผ่อนชำระ list without CCDS; a name saved earlier that is not in it stays as an option
+  const models = PAY_MODELS.filter(m => m !== 'CCDS');
+  const list = models.includes(R.product) || !R.product ? models : [R.product, ...models];
+  document.getElementById('r-f-product').innerHTML = list.map(m => `<option value="${esc(m)}">${esc(m)}</option>`).join('');
+  document.querySelectorAll('[data-r]').forEach(el => { el.value = R[el.dataset.r] ?? ''; });
+  renderRates();
+}
 
 /* term dropdown + editable rate for that term (rebate tab); each term keeps its own rate */
 function renderRates(){
@@ -1316,17 +1482,184 @@ document.querySelectorAll('[data-r]').forEach(el => el.addEventListener('input',
   saveR(); renderRebate();
 }));
 
+/* ---------- ผ่อนชำระ (installment schedule) ---------- */
+const lineTotal = it => Math.round((+it.qty || 0) * (+it.price || 0) * 100) / 100;
+const payTotal = () => Math.round(P.items.reduce((s, it) => s + lineTotal(it), 0) * 100) / 100;
+const payModels = () => P.items.map(it => it.model);
+const payMonths = () => Math.min(12, Math.max(1, Math.round(+P.months || 1)));
+// Installments the user typed stay as typed; the others share what is left of the price equally
+// (rounded to satang, the last of them takes the rounding difference), so the total stays the price.
+function payAmounts(){
+  const n = payMonths(), price = Math.round(payTotal() * 100);
+  const fixed = Array.from({ length: n }, (_, i) => P.custom[i] == null || P.custom[i] === '' ? null : Math.round(+P.custom[i] * 100));
+  const auto = []; let used = 0;
+  fixed.forEach((v, i) => { if(v == null) auto.push(i); else used += v; });
+  const out = fixed.slice();
+  if(auto.length){
+    const rest = price - used, each = Math.round(rest / auto.length);
+    auto.forEach((idx, k) => { out[idx] = k < auto.length - 1 ? each : rest - each * (auto.length - 1); });
+  }
+  return out.map(v => v / 100);
+}
+const instLabel = i => 'งวด ' + (i + 1) + ' · ' + thMonthYear(i, true).replace(/ 25(\d\d)$/, ' $1');
+// installment fields: rebuilt when their number or months change, otherwise only values refresh
+function syncInst(amounts, total){
+  const grid = document.getElementById('p-instgrid'), n = amounts.length;
+  const labels = amounts.map((_, i) => instLabel(i)).join('|');
+  if(grid.dataset.labels !== labels){
+    grid.dataset.labels = labels;
+    grid.innerHTML = amounts.map((_, i) => `<div><label for="p-inst-${i}">${instLabel(i)}</label><input id="p-inst-${i}" data-i="${i}" type="text" inputmode="decimal" autocomplete="off"></div>`).join('');
+  }
+  grid.querySelectorAll('input').forEach(el => {
+    const i = +el.dataset.i, typed = P.custom[i] != null && P.custom[i] !== '';
+    el.classList.toggle('edited', typed); el.classList.toggle('auto', !typed);
+    if(document.activeElement !== el) el.value = total || typed ? fmtN(amounts[i], 2) : '';
+  });
+  const sum = Math.round(amounts.reduce((a, b) => a + b, 0) * 100) / 100, diff = Math.round((sum - total) * 100) / 100;
+  const neg = amounts.some(v => v < 0);
+  const s = document.getElementById('p-instsum');
+  s.className = diff || neg ? 'bad' : 'ok';
+  s.textContent = !total && !sum ? 'ใส่ราคาเครื่องก่อน'
+    : diff ? 'รวม ' + fmtN(sum, 2) + ' บาท ' + (diff > 0 ? 'เกิน' : 'ขาด') + 'ราคาเครื่อง ' + fmtN(Math.abs(diff), 2) + ' บาท'
+    : neg ? 'มีงวดติดลบ ยอดที่แก้รวมกันเกินราคาเครื่อง'
+    : 'รวม ' + fmtN(sum, 2) + ' บาท = ราคาเครื่อง ✓';
+  return { sum, diff, neg };
+}
+const thMonthYear = (i, short) => {   // i = months after the start month
+  const m0 = (+P.startMonth || 0) + i, y = (+P.startYear || 0) + Math.floor(m0 / 12), m = ((m0 % 12) + 12) % 12;
+  return (short ? TH_MONTHS_SHORT : TH_MONTHS)[m] + ' ' + y;
+};
+function renderPay(){
+  const $ = id => document.getElementById(id);
+  const n = payMonths(), amounts = payAmounts(), amt = amounts[0], total = payTotal();
+  syncItems();
+  const any = total || amounts.some(v => v);   // typed installments show even before a price is entered
+  const money = v => any ? fmtN(v) : '–';
+  const check = syncInst(amounts, total);
+  const lo = Math.min(...amounts), hi = Math.max(...amounts), same = lo === hi;
+  // equal installments except a rounding difference in the last one count as "equal"
+  const nearlySame = amounts.slice(0, -1).every(v => v === amt);
+  const who = String(P.customer || '').trim();
+  $('p-title').textContent = P.title;
+  const units = P.items.reduce((s, it) => s + (+it.qty || 0), 0);
+  const modelText = P.items.length === 1 ? 'รุ่น ' + P.items[0].model + (+P.items[0].qty > 1 ? ' × ' + P.items[0].qty : '') : P.items.length + ' รุ่น (' + units + ' เครื่อง)';
+  $('p-sub').textContent = [who || null, modelText, 'ผ่อน ' + n + ' งวด', 'เริ่ม ' + thMonthYear(0)].filter(Boolean).join(' · ');
+  $('p-amt').textContent = any ? fmtN(amt) + ' บาท' : '– บาท';
+  $('p-total').innerHTML = 'มูลค่ารวมทั้งหมด <b>' + money(total) + '</b> บาท';
+  $('p-amt').previousElementSibling.textContent = same || nearlySame ? 'ยอดชำระต่องวด' : 'ยอดชำระงวดแรก';
+  const box = (l, v, cls = '') => `<div class="kvbox ${cls}"><div class="l">${esc(l)}</div><div class="v">${v}</div></div>`;
+  const itemRows = P.items.map(it => `<tr><td class="model">${esc(it.model)}</td><td>${fmtN(+it.qty || 0)}</td><td>${money(+it.price || 0)}</td><td>${money(lineTotal(it))}</td></tr>`).join('');
+  const itemsPanel = `<div class="panel itempanel"><table class="itemtbl"><thead><tr><th>รุ่นเครื่อง</th><th>จำนวน (เครื่อง)</th><th>ราคา/เครื่อง (บาท)</th><th>รวม (บาท)</th></tr></thead><tbody>${itemRows}</tbody>${P.items.length > 1 ? `<tfoot><tr><td>รวม ${units} เครื่อง</td><td></td><td></td><td>${money(total)}</td></tr></tfoot>` : ''}</table></div>`;
+  // the machine price is in the machine table; a total that does not match it is flagged on the amount card
+  const warn = check.diff ? '<span class="warn">ยอดรวมทุกงวด ' + fmtN(check.sum, 2) + ' บาท ไม่เท่าราคาเครื่อง ' + money(total) + ' บาท</span>' : '';
+  $('p-info').innerHTML = [
+    box('ชื่อลูกค้า', esc(who || '–'), 'full'),
+    itemsPanel,
+    box('ระยะเวลาการผ่อน', n + ' เดือน (' + n + ' งวด)'),
+    box('เดือนที่เริ่มชำระ', thMonthYear(0)),
+    box('งวดสุดท้าย', thMonthYear(n - 1)),
+    same ? box('ยอดชำระต่องวด', money(amt) + ' บาท' + warn, 'amt')
+      : nearlySame ? box('ยอดชำระต่องวด', money(amt) + ' บาท<small style="display:block;font-size:11px;font-weight:500;color:var(--muted)">งวดสุดท้าย ' + fmtN(amounts[n - 1]) + ' บาท</small>' + warn, 'amt')
+      : box('ยอดชำระต่องวด', money(lo) + ' – ' + money(hi) + ' บาท<small style="display:block;font-size:11px;font-weight:500;color:var(--muted)">ไม่เท่ากันทุกงวด ดูตารางด้านล่าง</small>' + warn, 'amt')
+  ].join('');
+  // schedule: one table up to 24 rows, two side-by-side tables above that
+  let cum = 0;
+  const rows = amounts.map((a, i) => { cum += a; return `<tr><td>${i + 1}</td><td>${thMonthYear(i)}</td><td class="amt">${money(a)}</td><td class="cum">${money(Math.round(cum * 100) / 100)}</td></tr>`; });
+  const table = list => `<div class="panel"><table class="paytbl"><thead><tr><th>งวดที่</th><th>เดือนที่ชำระ</th><th>ยอดชำระ (บาท)</th><th>ยอดสะสม (บาท)</th></tr></thead><tbody>${list.join('')}</tbody></table></div>`;
+  const two = n > 24, half = Math.ceil(n / 2);
+  $('p-tables').classList.toggle('two', two);
+  $('p-tables').classList.toggle('dense', (two ? half : n) > 20);
+  $('p-tables').innerHTML = two ? table(rows.slice(0, half)) + table(rows.slice(half)) : table(rows);
+  const notes = String(P.notes || '').split('\n').map(s => s.trim()).filter(Boolean);
+  $('p-hl').innerHTML = notes.map(s => `<li>${esc(s)}</li>`).join('');
+  $('p-hlbox').hidden = !notes.length;
+}
+// machine rows: rebuilt when rows are added or removed, otherwise only totals refresh (typing keeps focus)
+function modelOptions(selected){
+  return (PAY_MODELS.includes(selected) ? PAY_MODELS : [selected, ...PAY_MODELS]).map(m => `<option value="${esc(m)}"${m === selected ? ' selected' : ''}>${esc(m)}</option>`).join('');
+}
+function buildItems(){
+  const list = document.getElementById('p-itemlist');
+  list.innerHTML = P.items.map((it, i) => `<div class="item" data-row="${i}">
+      <select data-it="model" data-i="${i}" aria-label="รุ่นเครื่อง รายการ ${i + 1}">${modelOptions(it.model)}</select>
+      <button class="btn x" type="button" data-itdel="${i}" title="ลบรายการนี้"${P.items.length < 2 ? ' hidden' : ''}>✕</button>
+      <div class="itemrow2">
+        <div class="unit" data-unit="เครื่อง"><input data-it="qty" data-i="${i}" type="number" min="1" step="1" inputmode="numeric" value="${it.qty ?? ''}" aria-label="จำนวน รายการ ${i + 1}"></div>
+        <div class="unit" data-unit="บาท/เครื่อง"><input data-it="price" data-i="${i}" type="number" min="0" step="any" inputmode="decimal" placeholder="ราคา" value="${it.price ?? ''}" aria-label="ราคาต่อเครื่อง รายการ ${i + 1}"></div>
+        <div class="linetot" data-tot="${i}"></div>
+      </div>
+    </div>`).join('');
+}
+function syncItems(){
+  if(document.getElementById('p-itemlist').children.length !== P.items.length) buildItems();
+  P.items.forEach((it, i) => {
+    const el = document.querySelector(`[data-tot="${i}"]`);
+    if(el) el.innerHTML = '<small>รวม</small>' + (lineTotal(it) ? fmtN(lineTotal(it)) : '–');
+  });
+  const units = P.items.reduce((s, it) => s + (+it.qty || 0), 0), total = payTotal();
+  document.getElementById('p-itemsum').innerHTML = 'ราคาเครื่องทั้งหมด <b>' + (total ? fmtN(total) : '–') + '</b> บาท' + (P.items.length > 1 ? ' (' + units + ' เครื่อง)' : '');
+}
+document.getElementById('p-itemlist').addEventListener('input', e => {
+  const el = e.target, k = el.dataset.it; if(!k) return;
+  const it = P.items[+el.dataset.i]; if(!it) return;
+  it[k] = k === 'model' ? el.value : (el.value === '' ? '' : +el.value);
+  savePAndRender();
+});
+document.getElementById('p-itemlist').addEventListener('click', e => {
+  const d = e.target.dataset.itdel; if(d === undefined || P.items.length < 2) return;
+  P.items.splice(+d, 1); buildItems(); savePAndRender(); fitEditor();
+});
+document.getElementById('p-additem').addEventListener('click', () => {
+  const used = payModels();
+  P.items.push({ model: PAY_MODELS.find(m => !used.includes(m)) || PAY_MODELS[0], qty: 1, price: '' });
+  buildItems(); savePAndRender(); fitEditor();
+  const last = document.querySelector(`[data-it="price"][data-i="${P.items.length - 1}"]`); if(last) last.focus();
+});
+function fillP(){
+  const years = new Set([+P.startYear]);
+  const nowBE = new Date().getFullYear() + 543;
+  for(let y = nowBE - 1; y <= nowBE + 5; y++) years.add(y);
+  buildItems();
+  document.getElementById('p-f-months').innerHTML = Array.from({ length: 12 }, (_, i) => `<option value="${i + 1}">${i + 1} เดือน</option>`).join('');
+  document.getElementById('p-f-month').innerHTML = TH_MONTHS.map((m, i) => `<option value="${i}">${m}</option>`).join('');
+  document.getElementById('p-f-year').innerHTML = [...years].sort((a, b) => a - b).map(y => `<option value="${y}">${y}</option>`).join('');
+  document.querySelectorAll('[data-p]').forEach(el => { el.value = P[el.dataset.p] ?? ''; });
+}
+document.querySelectorAll('[data-p]').forEach(el => el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', () => {
+  const k = el.dataset.p;
+  P[k] = (el.type === 'number' || k === 'months' || k === 'startMonth' || k === 'startYear') ? (el.value === '' ? '' : +el.value) : el.value;
+  if(k === 'months') P.custom = P.custom.slice(0, payMonths());   // typed amounts past the new last installment are dropped
+  savePAndRender();
+  if(k === 'months') fitEditor();   // the number of installment fields changed the form height
+}));
+function savePAndRender(){ saveP(); renderPay(); }
+const parseMoney = s => { const v = String(s).replace(/[,\s]/g, ''); return v === '' ? null : (isFinite(+v) ? +v : undefined); };
+document.getElementById('p-instgrid').addEventListener('input', e => {
+  const el = e.target; if(!el.dataset.i) return;
+  const v = parseMoney(el.value); if(v === undefined) return;   // ignore half-typed text like "1.2.3"
+  const i = +el.dataset.i, n = payMonths();
+  P.custom = Array.from({ length: n }, (_, k) => k === i ? v : (P.custom[k] ?? null));
+  savePAndRender();
+});
+document.getElementById('p-instgrid').addEventListener('focusout', e => { if(e.target.dataset.i) setTimeout(renderPay); });   // tidy the number format
+document.getElementById('p-instreset').addEventListener('click', () => { P.custom = []; savePAndRender(); });
+
 /* ---------- tab menu ---------- */
 let TAB = 'lease';
+const TABS = ['lease', 'rebate', 'pay'];
 try{ TAB = localStorage.getItem(TKEY) || 'lease'; }catch(e){}
-if(['lease', 'rebate'].includes(location.hash.slice(1))) TAB = location.hash.slice(1);
+if(!TABS.includes(TAB)) TAB = 'lease';
+if(TABS.includes(location.hash.slice(1))) TAB = location.hash.slice(1);
 function setTab(t){
+  if(t !== TAB) disarmReset();   // a reset armed on one tab must not wipe another tab
   TAB = t;
   document.querySelectorAll('.tab').forEach(b => b.setAttribute('aria-selected', String(b.dataset.tab === t)));
   document.getElementById('ed-lease').hidden = t !== 'lease';
   document.getElementById('sheet').hidden = t !== 'lease';
   document.getElementById('ed-rebate').hidden = t !== 'rebate';
   document.getElementById('sheet-rebate').hidden = t !== 'rebate';
+  document.getElementById('ed-pay').hidden = t !== 'pay';
+  document.getElementById('sheet-pay').hidden = t !== 'pay';
   document.getElementById('pg').textContent = `@page{size:A4 ${t === 'lease' ? 'landscape' : 'portrait'};margin:0}`;
   try{ localStorage.setItem(TKEY, t); }catch(e){}
   fitSheets();
@@ -1371,6 +1704,12 @@ window.addEventListener('orientationchange', () => setTimeout(fitSheets, 200));
 
 // reset asks for a second click instead of confirm(), which the claude.ai viewer does not show
 let resetArmed = null;
+function disarmReset(){
+  if(!resetArmed) return;
+  const btn = document.getElementById('reset');
+  clearTimeout(resetArmed); resetArmed = null;
+  btn.innerHTML = btn.dataset.label; btn.classList.remove('armed');
+}
 document.getElementById('reset').addEventListener('click', e => {
   const btn = e.currentTarget;
   if(!resetArmed){
@@ -1382,8 +1721,9 @@ document.getElementById('reset').addEventListener('click', e => {
   }
   clearTimeout(resetArmed); resetArmed = null;
   btn.innerHTML = btn.dataset.label; btn.classList.remove('armed');
-  if(TAB === 'rebate'){ R = structuredClone(RDEFAULT); fillR(); saveR(); renderRebate(); }
-  else { S = structuredClone(DEFAULT); fillForm(); update(); }
+  if(TAB === 'pay'){ P = clone(PDEFAULT); fillP(); saveP(); renderPay(); }
+  else if(TAB === 'rebate'){ R = clone(RDEFAULT); fillR(); saveR(); renderRebate(); }
+  else { S = clone(DEFAULT); fillForm(); update(); }
   fitEditor();
   showMsg('คืนค่าตัวอย่างแล้ว');
 });
@@ -1394,7 +1734,7 @@ function showMsg(text, isError){
   clearTimeout(msgTimer); msgTimer = setTimeout(() => { m.hidden = true; }, 5000);
 }
 function exportName(){
-  const name = TAB === 'rebate' ? `ตารางเงินคืนดอกเบี้ย_${R.product}` : `ตารางเปรียบเทียบลีสซิ่ง_${S.lessorEn || S.lessor}`;
+  const name = TAB === 'pay' ? `ตารางผ่อนชำระ_${String(P.customer || '').trim() || P.items[0].model}` : TAB === 'rebate' ? `ตารางเงินคืนดอกเบี้ย_${R.product}` : `ตารางเปรียบเทียบลีสซิ่ง_${S.lessorEn || S.lessor}`;
   return name.replace(/[\\/:*?"<>|]/g, '').replace(/[.\s]+$/, '');   // "Co., Ltd." must not end in ".."
 }
 document.getElementById('f-summary').addEventListener('change', e => { S.showSummary = e.target.checked; update(); });
@@ -1414,7 +1754,7 @@ const isWebKit = isIOS || (/Safari/.test(navigator.userAgent) && !/Chrome|Chromi
 async function makeCanvas(scale){
   if(!window.htmlToImage) await loadScript('https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js');
   if(document.fonts) await document.fonts.ready;
-  const node = document.getElementById(TAB === 'rebate' ? 'sheet-rebate' : 'sheet');
+  const node = document.getElementById({ lease: 'sheet', rebate: 'sheet-rebate', pay: 'sheet-pay' }[TAB]);
   const opts = { pixelRatio: scale, backgroundColor: getComputedStyle(node).backgroundColor, style: { boxShadow: 'none', transform: 'none' } };
   // Safari draws the first pass before the embedded fonts are ready, so draw once and throw it away
   if(isWebKit) await htmlToImage.toCanvas(node, opts);
@@ -1432,7 +1772,7 @@ const inViewer = !!(window.claude && typeof window.claude.use === 'function');
 // without running it (iPhone Files, LINE, Mail) still show the data. A browser re-renders it on load.
 function withSnapshot(html){
   const doc = new DOMParser().parseFromString(html, 'text/html');
-  for(const id of ['ed-lease', 'ed-rebate']){
+  for(const id of ['ed-lease', 'ed-rebate', 'ed-pay']){
     const live = document.getElementById(id), copy = live.cloneNode(true);
     const from = live.querySelectorAll('input, select, textarea'), to = copy.querySelectorAll('input, select, textarea');
     from.forEach((el, i) => {
@@ -1446,7 +1786,7 @@ function withSnapshot(html){
     target.innerHTML = copy.innerHTML;
     target.toggleAttribute('hidden', live.hidden);
   }
-  for(const id of ['sheet', 'sheet-rebate']){
+  for(const id of ['sheet', 'sheet-rebate', 'sheet-pay']){
     const live = document.getElementById(id), target = doc.getElementById(id);
     target.innerHTML = live.innerHTML;
     target.toggleAttribute('hidden', live.hidden);
@@ -1461,7 +1801,7 @@ document.getElementById('savehtml').addEventListener('click', () => {
   const start = PAGE_SOURCE.indexOf('const SAVED = ');
   const end = PAGE_SOURCE.indexOf(marker, start);
   if(start < 0 || end < 0){ showMsg('สร้างไฟล์ HTML ไม่ได้', true); return; }
-  const data = { id: Date.now().toString(36), savedAt: new Date().toISOString(), tab: TAB, S, R };
+  const data = { id: Date.now().toString(36), savedAt: new Date().toISOString(), tab: TAB, S, R, P };
   const json = JSON.stringify(data).replace(/</g, '\\u003c');   // keeps typed text from closing the <script>
   const html = PAGE_SOURCE.slice(0, start) + 'const SAVED = ' + json + PAGE_SOURCE.slice(end);
   deliver('ตารางคำนวณ Leasing.html', new Blob([withSnapshot(html)], { type: 'text/html' }))
@@ -1481,6 +1821,7 @@ function shareName(filename){
   let base;
   if(ext === '.html') base = 'Leasing-Calculator';
   else if(TAB === 'rebate') base = ['Interest-Rebate', ascii(R.product)].filter(Boolean).join('_');
+  else if(TAB === 'pay') base = ['Installment', ascii(P.items[0].model)].filter(Boolean).join('_');
   else base = ['Leasing', ascii(S.lessorEn).split('-').slice(0, 2).join('-')].filter(Boolean).join('_');
   return base + ext;
 }
@@ -1522,7 +1863,12 @@ function offerShare(filename, blob){
       // title as a message); a picture goes through without one, so only images are shared bare.
       const data = blob.type.startsWith('image/') ? { files: [file] } : { files: [file], title: filename };
       try{ await navigator.share(data); close(); }
-      catch(err){ if(err && err.name === 'AbortError') return; window.open(url, '_blank'); }
+      catch(err){
+        if(err && err.name === 'AbortError') return;
+        // window.open after an await is blocked as a popup on iPhone: offer the open button for a fresh tap
+        box.querySelector('[data-act="open"]').hidden = false;
+        box.querySelector('.sharehint').textContent = 'ส่งต่อไม่สำเร็จ กด "เปิดไฟล์" แล้วใช้ปุ่มแชร์ของเบราว์เซอร์';
+      }
     }else{
       window.open(url, '_blank');
     }
@@ -1575,11 +1921,11 @@ document.getElementById('pdf').addEventListener('click', e => busy(e.currentTarg
   await deliver(exportName() + '.pdf', pdf.output('blob'));
 }));
 
-fillForm(); fillR();
+fillForm(); fillR(); fillP();
 setTab(TAB);
-render(); renderRebate();
+render(); renderRebate(); renderPay();
 fitEditor();
-if(document.fonts) document.fonts.ready.then(() => { render(); renderRebate(); fitEditor(); });
+if(document.fonts) document.fonts.ready.then(() => { render(); renderRebate(); renderPay(); fitEditor(); });
 </script>
 </body>
 </html>
