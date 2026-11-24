@@ -1395,7 +1395,8 @@ function rebateCol(price){
   const mo = p.m ? (fin + tot) / p.m : 0;
   const reb = perYr * pay;
   const cust = tot - reb;
-  return { price, down, fin, perYr, tot, mo, reb, cust, pct: price ? reb / price * 100 : 0, net: price - reb, cost: price + cust };
+  // net machine cost = everything the customer pays (price + all interest) less the interest refunded
+  return { price, down, fin, perYr, tot, mo, reb, cust, pct: price ? reb / price * 100 : 0, net: price + tot - reb };
 }
 const fmtN = (n, d) => { const r = Math.round(n * 100) / 100; return fmt(r, d ?? (Number.isInteger(r) ? 0 : 2)); };
 const signed = (n, d) => (n < 0 ? '−' : '') + fmtN(Math.abs(n), d);
@@ -1425,8 +1426,8 @@ function renderRebate(){
   const kpi = (cls, l, v, s) => `<div class="kpi ${cls}"><div class="l">${esc(l)}</div><div class="v">${v} <small style="font-size:14px">บาท</small></div><div class="s">${s}</div></div>`;
   $('r-kpis').innerHTML = single ? [
     kpi('', 'เงินคืนดอกเบี้ย', fmtN(a.reb), `คิดเป็น <b>${a.pct.toFixed(2)}%</b> ของราคาขาย`),
-    kpi('net', 'ยอดสุทธิค่าเครื่อง', fmtN(a.net), `ราคาขาย ${fmtN(a.price)} − เงินคืน ${fmtN(a.reb)}`),
-    kpi('mo', 'ค่างวดต่อเดือนของลูกค้า', fmtN(a.mo, 2), `ผ่อน <b>${months}</b> งวด · ต้นทุนรวม <b>${fmtN(a.cost)}</b> บาท`)
+    kpi('net', 'ยอดสุทธิค่าเครื่อง', fmtN(a.net), `ราคาขาย ${fmtN(a.price)} + ดอกเบี้ย ${fmtN(a.tot)} − เงินคืน ${fmtN(a.reb)}`),
+    kpi('mo', 'ค่างวดต่อเดือนของลูกค้า', fmtN(a.mo, 2), `ผ่อน <b>${months}</b> งวด · ยอดผ่อนรวม <b>${fmtN(a.fin + a.tot)}</b> บาท`)
   ].join('') : [
     kpi('', `เงินคืนดอกเบี้ย · ${R.name1}`, fmtN(a.reb), `ยอดสุทธิค่าเครื่อง <b>${fmtN(a.net)}</b> บาท`),
     kpi('', `เงินคืนดอกเบี้ย · ${R.name2}`, fmtN(b.reb), `ยอดสุทธิค่าเครื่อง <b>${fmtN(b.net)}</b> บาท`),
@@ -1447,8 +1448,7 @@ function renderRebate(){
     ['เงินคืนดอกเบี้ย (บาท)', c => c.reb, null, 'hi'],
     ['ดอกเบี้ยที่ลูกค้าจ่ายเอง (บาท)', c => c.cust],
     ['เงินคืนดอกเบี้ย คิดเป็น % ของราคาขาย', c => c.pct, P],
-    ['ยอดสุทธิค่าเครื่อง (ราคาขาย − เงินคืนดอกเบี้ย)', c => c.net, null, 'hi2'],
-    ['ต้นทุนรวมที่ลูกค้าจ่ายจริง (ราคาขาย + ดอกเบี้ยที่ลูกค้าจ่ายเอง)', c => c.cost]
+    ['ยอดสุทธิค่าเครื่อง (ราคาขาย + ดอกเบี้ยรวม − เงินคืนดอกเบี้ย)', c => c.net, null, 'hi2']
   ];
   $('r-rows').innerHTML = rows.map(([label, f, d, cls]) => {
     const v1 = f(a), v2 = f(b), df = v2 - v1;
