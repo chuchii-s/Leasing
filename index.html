@@ -1453,17 +1453,17 @@ function renderRebate(){
   const P = 'pct';
   const rows = [
     ['ราคาขายเครื่อง (บาท)', c => c.price],
-    [`เงินดาวน์ (บาท)`, c => c.down],
+    downPctOf() ? [`เงินดาวน์ (บาท)`, c => c.down] : null,   // no down payment: no row
     ['ยอดจัดไฟแนนซ์ (บาท)', c => c.fin],
     ['ดอกเบี้ยต่อปี (บาท)', c => c.perYr],
     ['ดอกเบี้ยรวมตลอดสัญญา (บาท)', c => c.tot],
     ['ค่างวดต่อเดือน รวมดอกเบี้ย (บาท)', c => c.mo, 2],
+    ['ยอดรวมผ่อนชำระ (บาท)', c => c.fin + c.tot],   // all installments = financed amount + interest
     ['เงินคืนดอกเบี้ย (บาท)', c => c.reb, null, 'hi'],
     ['ดอกเบี้ยที่ลูกค้าจ่ายเอง (บาท)', c => c.cust],
-    ['เงินคืนดอกเบี้ย คิดเป็น % ของราคาขาย', c => c.pct, P],
     ['ยอดสุทธิค่าเครื่อง (ราคาขาย + ดอกเบี้ยรวม − เงินคืนดอกเบี้ย)', c => c.net, null, 'hi2']
   ];
-  $('r-rows').innerHTML = rows.map(([label, f, d, cls]) => {
+  $('r-rows').innerHTML = rows.filter(Boolean).map(([label, f, d, cls]) => {
     const v1 = f(a), v2 = f(b), df = v2 - v1;
     const show = d === P ? (n => n.toFixed(2) + '%') : (n => fmtN(n, d));
     const showD = d === P ? (n => (n < 0 ? '−' : '') + Math.abs(n).toFixed(2) + '%') : (n => signed(n, d));
@@ -1479,7 +1479,8 @@ function renderRebate(){
 function fillR(){
   // model dropdown: the ผ่อนชำระ list without CCDS; a name saved earlier that is not in it stays as an option
   const models = PAY_MODELS.filter(m => m !== 'CCDS');
-  const list = models.includes(R.product) || !R.product ? models : [R.product, ...models];
+  if(!String(R.product || '').trim()) R.product = models[0];   // an empty name would leave the list and the report disagreeing
+  const list = models.includes(R.product) ? models : [R.product, ...models];
   document.getElementById('r-f-product').innerHTML = list.map(m => `<option value="${esc(m)}">${esc(m)}</option>`).join('');
   document.querySelectorAll('[data-r]').forEach(el => { el.value = R[el.dataset.r] ?? ''; });
   renderRates();
