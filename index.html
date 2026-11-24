@@ -1121,11 +1121,11 @@ function roundMo(x, mode){
 }
 function calc(s){
   const price = +s.price || 0;
-  return s.plans.filter(p => +p.m > 0).map(p => {
+  return s.plans.map((p, idx) => ({ p, idx })).filter(({ p }) => +p.m > 0).map(({ p, idx }) => {
     const m = +p.m, r = +p.r || 0;
     const mo = roundMo(price * (1 + r/100 * m/12) / m, s.rounding);
     const total = Math.round(mo * m * 100)/100;
-    return { m, r, mo, total, interest: Math.round((total - price)*100)/100 };
+    return { idx, m, r, mo, total, interest: Math.round((total - price)*100)/100 };   // idx = position in s.plans
   });
 }
 
@@ -1247,7 +1247,7 @@ function render(){
 
   const iLowInt = rows.reduce((a, r, i) => r.interest < rows[a].interest ? i : a, 0);
   const iLowMo  = rows.reduce((a, r, i) => r.mo < rows[a].mo ? i : a, 0);
-  const iPop = +S.popular;
+  const iPop = rows.findIndex(r => r.idx === +S.popular);   // S.popular points into S.plans, the cards into rows
 
   $('o-cards').style.gridTemplateColumns = `repeat(${rows.length}, 1fr)`;
   $('o-cards').innerHTML = rows.map((r, i) => {
@@ -1386,9 +1386,10 @@ function curPlan(){
   // R.rate = number typed by the user for the current term; null = use the default rate
   return { m: +p.m, r: R.rate != null ? +R.rate : (+p.r || 0) };
 }
+const downPctOf = () => Math.min(100, Math.max(0, +R.downPct || 0));   // 0-100 %
 function rebateCol(price){
   const s = R, p = curPlan(), years = p.m / 12, pay = Math.min(Math.max(+s.payYears || 0, 0), years);
-  const down = price * (+s.downPct || 0) / 100;
+  const down = price * downPctOf() / 100;
   const fin = price - down;
   const perYr = fin * p.r / 100;
   const tot = perYr * years;
@@ -1405,9 +1406,9 @@ function renderRebate(){
   const $ = id => document.getElementById(id);
   const a = rebateCol(+R.price1 || 0), b = rebateCol(+R.price2 || 0);
   const plan = curPlan(), months = plan.m, rate = plan.r;
-  const pay = Math.min(+R.payYears || 0, months / 12);
+  const pay = Math.min(Math.max(+R.payYears || 0, 0), months / 12);
   $('r-title').textContent = R.title;
-  $('r-sub').textContent = `สินค้า ${R.product} · เงินดาวน์ ${fmtN(+R.downPct || 0)}% · ผ่อน ${thShort(months)} (${months} งวด) · Flat Rate ${rate.toFixed(2)}% ต่อปี`;
+  $('r-sub').textContent = `สินค้า ${R.product} · เงินดาวน์ ${fmtN(downPctOf())}% · ผ่อน ${thShort(months)} (${months} งวด) · Flat Rate ${rate.toFixed(2)}% ต่อปี`;
   $('r-pay').textContent = pay ? `${pay} ปีแรก` : 'ไม่มี';
 
   // name 2 left blank = single model: no second column, no comparison
@@ -1417,7 +1418,7 @@ function renderRebate(){
   $('r-inputs').innerHTML = [
     box(`ราคาขาย ${R.product} ${n1}`, `${fmtN(a.price)} บาท`, single ? 'wide' : ''),
     single ? '' : box(`ราคาขาย ${R.product} ${n2}`, `${fmtN(b.price)} บาท`),
-    box('เงินดาวน์ (% ของราคาขาย)', `${Number(+R.downPct || 0).toFixed(2)}%`),
+    box('เงินดาวน์ (% ของราคาขาย)', `${downPctOf().toFixed(2)}%`),
     box('อัตราดอกเบี้ย Flat Rate (% ต่อปี)', `${rate.toFixed(2)}%`),
     box('ระยะเวลาผ่อน', `${thShort(months)} (${months} งวด)`),
     box('จำนวนปีที่ช่วยจ่ายดอกเบี้ย', `${pay} ปี`)
@@ -1492,7 +1493,7 @@ document.querySelectorAll('[data-r]').forEach(el => el.addEventListener('input',
 }));
 
 /* ---------- ผ่อนชำระ (installment schedule) ---------- */
-const lineTotal = it => Math.round((+it.qty || 0) * (+it.price || 0) * 100) / 100;
+const lineTotal = it => Math.round(Math.max(0, +it.qty || 0) * Math.max(0, +it.price || 0) * 100) / 100;   // a negative typed value counts as 0
 const payTotal = () => Math.round(P.items.reduce((s, it) => s + lineTotal(it), 0) * 100) / 100;
 const payModels = () => P.items.map(it => it.model);
 const payMonths = () => Math.min(12, Math.max(1, Math.round(+P.months || 1)));
@@ -1505,7 +1506,8 @@ function payAmounts(){
   fixed.forEach((v, i) => { if(v == null) auto.push(i); else used += v; });
   const out = fixed.slice();
   if(auto.length){
-    const rest = price - used, each = Math.round(rest / auto.length);
+    // never below 0: typed amounts over the price then show as "เกินราคาเครื่อง" instead of negative installments
+    const rest = Math.max(0, price - used), each = Math.round(rest / auto.length);
     auto.forEach((idx, k) => { out[idx] = k < auto.length - 1 ? each : rest - each * (auto.length - 1); });
   }
   return out.map(v => v / 100);
